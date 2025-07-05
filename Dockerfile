@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     libpangocairo-1.0-0 \
     libxss1 \
     xdg-utils \
+    ca-certificates \
+    libvulkan1 \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
