@@ -27,19 +27,17 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Chrome (stable)
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*
+# Install specific version of Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+ && apt-get install -y ./google-chrome-stable_current_amd64.deb \
+ && rm google-chrome-stable_current_amd64.deb
 
-# Install ChromeDriver (adjust version to match Chrome version)
-ARG CHROMEDRIVER_VERSION=115.0.5790.102
-RUN wget -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
-    && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin/ \
-    && rm /tmp/chromedriver_linux64.zip \
-    && chmod +x /usr/local/bin/chromedriver
+# Use matching ChromeDriver version (update URL as needed)
+RUN wget -O /tmp/chromedriver_linux64.zip https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/125.0.6422.112/linux64/chromedriver-linux64.zip \
+ && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin/ \
+ && mv /usr/local/bin/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver \
+ && rm -rf /tmp/chromedriver_linux64.zip /usr/local/bin/chromedriver-linux64 \
+ && chmod +x /usr/local/bin/chromedriver
 
 # Set display port to avoid errors
 ENV DISPLAY=:99
