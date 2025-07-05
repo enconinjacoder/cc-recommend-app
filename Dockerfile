@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     libxcursor1 \
     libxdamage1 \
     libxrandr2 \
-    libasound2 \
+    libasound2t64 \                    # updated from libasound2
     libatk1.0-0 \
     libatk-bridge2.0-0 \
     libcups2 \
@@ -24,13 +24,15 @@ RUN apt-get update && apt-get install -y \
     libpangocairo-1.0-0 \
     libxss1 \
     xdg-utils \
-    --no-install-recommends
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*       # clean up apt cache
 
 # Install Chrome (stable)
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
     && apt-get update \
-    && apt-get install -y google-chrome-stable
+    && apt-get install -y google-chrome-stable \
+    && rm -rf /var/lib/apt/lists/*    # clean up apt cache
 
 # Install ChromeDriver (adjust version to match Chrome version)
 ARG CHROMEDRIVER_VERSION=115.0.5790.102
