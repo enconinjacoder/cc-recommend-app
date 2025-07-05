@@ -1,6 +1,6 @@
 FROM eclipse-temurin:17-jdk
 
-# Install dependencies and Chrome
+# Install dependencies and Chrome driver
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
