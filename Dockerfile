@@ -49,4 +49,4 @@ ARG JAR_FILE=cc-recommend-app-1.jar
 COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-Xmx600m", "-XX:+UseG1GC", "-jar", "/app.jar"]
+ENTRYPOINT ["java","-Xms256m" ,"-Xmx500m", "-XX:+UseG1GC", "-jar", "/app.jar"]
